@@ -11,8 +11,7 @@ import {
 import type { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { signIn, signOut, getSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { signIn, getSession } from "next-auth/react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -29,7 +28,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const SignUp: NextPage = ({ session }: any) => {
   const [show, setShow] = React.useState(false);
-  const router = useRouter();
   const {
     handleSubmit,
     formState: { errors },
@@ -43,19 +41,11 @@ const SignUp: NextPage = ({ session }: any) => {
       return;
     }
     const { email } = values;
-    const res = await signIn("email", {
+    await signIn("email", {
       email,
     });
   }
   const handleClick = () => setShow(!show);
-
-  const handleSignOut = async () => {
-    const res = await signOut({
-      redirect: false,
-      callbackUrl: `${window.location.origin}/register`,
-    });
-    router.push(res.url);
-  };
 
   if (!session)
     return (

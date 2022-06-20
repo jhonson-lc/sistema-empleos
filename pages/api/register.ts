@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-export default async function (req, res) {
+export default async function (req:any, res:any) {
   try {
     const {date,email,firstName,lastName,password,phone} = req.body;
     await prisma.client.create({

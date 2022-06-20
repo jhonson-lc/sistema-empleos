@@ -26,7 +26,7 @@ interface Props {
   session: any;
 }
 
-const Login: NextPage<Props> = ({ session }) => {
+const Login: NextPage<Props> = () => {
   const [show, setShow] = React.useState(false);
   const {
     handleSubmit,
@@ -34,13 +34,12 @@ const Login: NextPage<Props> = ({ session }) => {
     register,
   } = useForm();
   async function onSubmit(values: any) {
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       redirect: false,
       username: values.name,
       email: values.email,
       password: values.password,
     });
-    console.log(res);
   }
   const handleClick = () => setShow(!show);
 
