@@ -1,0 +1,131 @@
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  emailVerified DateTime?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Client {
+  clientId  String    @id @default(cuid())
+  firstname String
+  lastname  String
+  email     String
+  date      DateTime?
+  phone     String
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Jobs      Jobs[]
+}
+
+model Employee {
+  employeeId     String           @id @default(cuid())
+  identification String
+  firstname      String
+  lastname       String
+  email          String
+  date           DateTime?
+  phone          String
+  city           String
+  password       String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @default(now())
+  References     References[]
+  Studies        Studies[]
+  Skills         Skills[]
+  WorkExperience WorkExperience[]
+  Jobs           Jobs[]
+}
+
+model References {
+  id          String   @id @default(cuid())
+  firstname   String
+  lastname    String
+  phonenumber String
+  workerId    String
+  employee    Employee @relation(fields: [workerId], references: [employeeId])
+}
+
+model Studies {
+  id       String   @id @default(cuid())
+  level    String
+  school   String
+  academic String
+  workerId String
+  employee Employee @relation(fields: [workerId], references: [employeeId])
+}
+
+model Skills {
+  id          String   @id @default(cuid())
+  description String
+  workerId    String
+  employee    Employee @relation(fields: [workerId], references: [employeeId])
+}
+
+model WorkExperience {
+  id        String   @id @default(cuid())
+  company   String
+  position  String
+  startDate DateTime
+  endDate   DateTime
+  phone     String
+  workerId  String
+  employee  Employee @relation(fields: [workerId], references: [employeeId])
+}
+
+model Jobs {
+  id          String   @id @default(cuid())
+  state       String
+  valoration  String
+  description String
+  workerId    String
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [clientId])
+  employee    Employee @relation(fields: [workerId], references: [employeeId])
+}
