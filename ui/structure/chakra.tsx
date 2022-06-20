@@ -9,7 +9,7 @@ interface ChakraProps {
   children: React.ReactNode;
 }
 
-const Chakra: React.FC<ChakraProps> = ({ children, cookies }) => {
+const Chakra: React.FC<ChakraProps> = ({ children }) => {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 };
 
