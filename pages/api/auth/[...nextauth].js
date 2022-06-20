@@ -20,6 +20,7 @@ export default NextAuth({
       from: process.env.EMAIL_FROM,
     }),
   ],
+  secret: process.env.NEXT_AUTH_SECRET,
   pages: {
     signIn: "/register",
     verifyRequest: "/loading",
