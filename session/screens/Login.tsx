@@ -60,9 +60,19 @@ const LoginScreen: React.FC = () => {
       w="full"
     >
       <Stack alignItems="start" gap={6} order={1} p={32}>
-        <Heading color="primary" fontSize={32} fontWeight={700} lineHeight={1}>
-          Iniciar Sesión
+        <Heading
+          color="primary.500"
+          fontSize={32}
+          fontWeight={700}
+          lineHeight={1}
+        >
+          Bienvenido a WorkSearch!
         </Heading>
+        <Text textAlign="center">
+          En WorkSearch puedes buscar miles de empleos en línea para encontrar
+          tu próximo reto profesional. Contamos con herramientas para búsqueda
+          de empleo.
+        </Text>
         <Stack direction="column" spacing={0} w={400}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl
