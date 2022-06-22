@@ -6,7 +6,7 @@ import { Button, Stack, Text } from "@chakra-ui/react";
 import LoginScreen from "../../session/screens/Login";
 
 const Login = ({ session }: any) => {
-  if (!session) return <LoginScreen login={session} />;
+  if (!session) return <LoginScreen />;
   return (
     <Stack>
       <Text>Estas logueado</Text>
