@@ -16,11 +16,7 @@ import { useForm } from "react-hook-form";
 
 import FormControl from "../../ui/form/FormControl";
 
-interface Props {
-  login?: any;
-}
-
-const LoginScreen: React.FC<Props> = ({ login }) => {
+const LoginScreen: React.FC = () => {
   const [show, setShow] = React.useState(false);
   const toast = useToast();
   const {
@@ -34,7 +30,9 @@ const LoginScreen: React.FC<Props> = ({ login }) => {
       password: values.password,
       redirect: false,
     });
-    if (res.status === 401) {
+    if (!res) return;
+    // eslint-disable-next-line dot-notation
+    if (res["status"] === 401) {
       toast({
         title: "Error",
         description: "Usuario o contraseña incorrectos",
@@ -44,7 +42,8 @@ const LoginScreen: React.FC<Props> = ({ login }) => {
         isClosable: true,
       });
     }
-    if (res.status === 200) {
+    // eslint-disable-next-line dot-notation
+    if (res["status"] === 200) {
       await signIn("email", {
         email: values.email,
       });
