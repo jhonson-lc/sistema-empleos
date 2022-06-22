@@ -170,7 +170,7 @@ const createProfile: React.FC<Props> = ({ session }) => {
         </Stack>
       </Stack>
       <Stack pr={24}>
-        <Image src="/register.svg" />
+        <Image src="../register.svg" />
       </Stack>
     </Stack>
   );

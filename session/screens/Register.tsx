@@ -6,6 +6,7 @@ import {
   useToast,
   HStack,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import React from "react";
@@ -47,7 +48,13 @@ const SignUp: NextPage = () => {
   }
 
   return (
-    <Stack direction="column" h="82vh" position="relative" w="full">
+    <Stack
+      direction="row"
+      h="82vh"
+      overflow="hidden"
+      position="relative"
+      w="full"
+    >
       <Stack alignItems="start" gap={6} p={32}>
         <Heading color="primary" fontSize={32} fontWeight={700} lineHeight={1}>
           Registrarse
@@ -81,6 +88,7 @@ const SignUp: NextPage = () => {
           </form>
         </Stack>
       </Stack>
+      <Image src="../register.svg" w="full" />
     </Stack>
   );
 };

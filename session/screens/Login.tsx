@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Button,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -50,73 +51,74 @@ const LoginScreen: React.FC = () => {
     }
   }
   return (
-    <Stack>
-      <Stack direction="row" h="82vh" position="relative" w="full">
-        <Stack alignItems="start" gap={6} p={32}>
-          <Heading
-            color="primary"
-            fontSize={32}
-            fontWeight={700}
-            lineHeight={1}
-          >
-            Iniciar Sesión
-          </Heading>
-          <Stack direction="column" spacing={0} w={400}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <FormControl
-                isRequired
-                error={errors.email && "Este campo es requerido"}
-                help="Nunca compartiremos su correo electrónico con nadie más"
-                label="Correo Electrónico"
-                name="email"
-              >
+    <Stack
+      direction="row"
+      h="82vh"
+      justifyContent="right"
+      overflow="hidden"
+      position="relative"
+      w="full"
+    >
+      <Stack alignItems="start" gap={6} order={1} p={32}>
+        <Heading color="primary" fontSize={32} fontWeight={700} lineHeight={1}>
+          Iniciar Sesión
+        </Heading>
+        <Stack direction="column" spacing={0} w={400}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl
+              isRequired
+              error={errors.email && "Este campo es requerido"}
+              help="Nunca compartiremos su correo electrónico con nadie más"
+              label="Correo Electrónico"
+              name="email"
+            >
+              <Input
+                {...register("email", {
+                  required: true,
+                  validate: (value) => value !== "",
+                })}
+                placeholder="juanperez@yahoo.com"
+              />
+            </FormControl>
+            <FormControl
+              isRequired
+              error={errors.password && "Este campo es requerido"}
+              label="Contraseña"
+              name="password"
+            >
+              <InputGroup size="md">
                 <Input
-                  {...register("email", {
+                  {...register("password", {
                     required: true,
-                    validate: (value) => value !== "",
                   })}
-                  placeholder="juanperez@yahoo.com"
+                  placeholder="Enter password"
+                  type={show ? "text" : "password"}
                 />
-              </FormControl>
-              <FormControl
-                isRequired
-                error={errors.password && "Este campo es requerido"}
-                label="Contraseña"
-                name="password"
-              >
-                <InputGroup size="md">
-                  <Input
-                    {...register("password", {
-                      required: true,
-                    })}
-                    placeholder="Enter password"
-                    type={show ? "text" : "password"}
-                  />
-                  <InputRightElement width="4.5rem">
-                    <Button
-                      colorScheme="primary"
-                      h="1.75rem"
-                      size="sm"
-                      onClick={() => setShow(!show)}
-                    >
-                      {show ? "Hide" : "Show"}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-              <HStack fontSize={12} my={2}>
-                <Text>No tienes cuenta?</Text>
-                <Button color="primary.500" fontSize={12} variant="link">
-                  <Link href="/auth/register">Registrarse</Link>
-                </Button>
-              </HStack>
-              <Button colorScheme="primary" mt={5} type="submit">
-                Iniciar Sesión
+                <InputRightElement width="4.5rem">
+                  <Button
+                    colorScheme="primary"
+                    h="1.75rem"
+                    size="sm"
+                    onClick={() => setShow(!show)}
+                  >
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <HStack fontSize={12} my={2}>
+              <Text>No tienes cuenta?</Text>
+              <Button color="primary.500" fontSize={12} variant="link">
+                <Link href="/auth/register">Registrarse</Link>
               </Button>
-            </form>
-          </Stack>
+            </HStack>
+            <Button colorScheme="primary" mt={5} type="submit">
+              Iniciar Sesión
+            </Button>
+          </form>
         </Stack>
       </Stack>
+      <Image src="../register.svg" w="full" />
     </Stack>
   );
 };
