@@ -60,16 +60,18 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      const u = await prisma.client.findFirst({
-        where: {
-          email: session.email,
-        },
-      });
       if (token) {
         session.userId = token.sub;
       }
       if (session) {
-        session.user.name = u.firstname + " " + u.lastname;
+        const u = await prisma.client.findUnique({
+          where: {
+            email: session.user.email,
+          },
+        });
+        if (u) {
+          session.user.name = u.firstname + " " + u.lastname;
+        }
       }
       return session;
     },

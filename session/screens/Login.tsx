@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,12 +25,14 @@ const LoginScreen: React.FC = () => {
     formState: { errors },
     register,
   } = useForm();
+  const router = useRouter();
   async function onSubmit(values: any) {
     const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
     });
+    console.log(res);
     if (!res) return;
     // eslint-disable-next-line dot-notation
     if (res["status"] === 401) {

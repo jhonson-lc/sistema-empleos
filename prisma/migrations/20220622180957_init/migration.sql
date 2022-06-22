@@ -29,7 +29,7 @@ CREATE TABLE "Session" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "email" TEXT,
+    "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -47,7 +47,7 @@ CREATE TABLE "Client" (
     "id" TEXT NOT NULL,
     "firstname" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
-    "email" TEXT,
+    "email" TEXT NOT NULL,
     "date" TIMESTAMP(3),
     "phone" TEXT NOT NULL,
     "password" TEXT NOT NULL,

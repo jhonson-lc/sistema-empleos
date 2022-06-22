@@ -3,12 +3,12 @@ const prisma = new PrismaClient();
 
 export default async function (req:any, res:any) {
   try {
-    const {date,user,email,firstName,lastName,password,phone} = req.body;
+    const {date,user,email,firstname,lastname,password,phone} = req.body.data;
 
     const profile = await prisma.client.create({
       data: {
-        firstname: firstName,
-        lastname: lastName,
+        firstname,
+        lastname,
         email,
         phone,
         password,
