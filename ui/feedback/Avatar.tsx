@@ -44,7 +44,7 @@ const Avatar: React.FC<Props> = ({ session, image, scale }) => {
           bg="none"
         >
           <StackM>
-            <AvatarChakra />
+            <AvatarChakra src={image && image} />
             {session && <Text color="white">{session.user.name}</Text>}
           </StackM>
         </MenuButton>
