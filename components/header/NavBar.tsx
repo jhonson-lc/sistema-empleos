@@ -6,11 +6,16 @@ import { useRouter } from "next/router";
 import Button from "../../components/Button";
 import MenuMobile from "../../components/header/MenuMobile";
 import Logo from "../../ui/static/Logo";
+import Avatar from "../../ui/feedback/Avatar";
 
 import { LINKS_NAV } from "./constants";
 import LinkItem from "./LinkItem";
 
-const Navbar: React.FC = () => {
+interface Props {
+  session: any;
+}
+
+const Navbar: React.FC<Props> = ({ session }) => {
   const { pathname } = useRouter();
   return (
     <Box
@@ -31,45 +36,51 @@ const Navbar: React.FC = () => {
         pos="relative"
       >
         <Logo size={28} />
-        <Stack
-          align="center"
-          color="paragraph"
-          direction="row"
-          display={{ base: "none", lg: "flex" }}
-          justify="center"
-          spacing={8}
-          wrap="wrap"
-        >
-          {LINKS_NAV.map(({ href, text }) => {
-            return (
-              <LinkItem
-                key={href}
-                external={text === "View Source" && true}
-                font={{ weight: 400, size: 15 }}
-                href={href}
-                path={pathname}
-              >
-                {text}
-              </LinkItem>
-            );
-          })}
-        </Stack>
-        <Stack alignItems="center" direction="row" spacing={5}>
+        {pathname !== "/dashboard" && (
           <Stack
-            alignItems="center"
+            align="center"
+            color="paragraph"
             direction="row"
-            display={{ base: "none", md: "flex" }}
+            display={{ base: "none", lg: "flex" }}
+            justify="center"
+            spacing={8}
+            wrap="wrap"
           >
-            <LinkItem font={{ weight: 400, size: 15 }} href="/login">
-              Iniciar Sesión
-            </LinkItem>
-            <Button
-              bg="#ffffff"
-              color="primary"
-              href="/register"
-              text="Crear cuenta"
-            />
+            {LINKS_NAV.map(({ href, text }) => {
+              return (
+                <LinkItem
+                  key={href}
+                  external={text === "View Source" && true}
+                  font={{ weight: 400, size: 15 }}
+                  href={href}
+                  path={pathname}
+                >
+                  {text}
+                </LinkItem>
+              );
+            })}
           </Stack>
+        )}
+        <Stack alignItems="center" direction="row" spacing={5}>
+          {!session ? (
+            <Stack
+              alignItems="center"
+              direction="row"
+              display={{ base: "none", md: "flex" }}
+            >
+              <LinkItem font={{ weight: 400, size: 15 }} href="/auth/login">
+                Iniciar Sesión
+              </LinkItem>
+              <Button
+                bg="#ffffff"
+                color="primary"
+                href="/auth/register"
+                text="Crear cuenta"
+              />
+            </Stack>
+          ) : (
+            <Avatar session={session} />
+          )}
           <MenuMobile path={pathname} />
         </Stack>
       </Container>

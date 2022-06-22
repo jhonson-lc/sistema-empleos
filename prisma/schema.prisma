@@ -36,11 +36,13 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String?   @unique
+  id            String     @id @default(cuid())
+  email         String?    @unique
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
+  client        Client[]
+  employee      Employee[]
 }
 
 model VerificationToken {
@@ -52,16 +54,18 @@ model VerificationToken {
 }
 
 model Client {
-  clientId  String    @id @default(cuid())
+  id        String    @id @default(cuid())
   firstname String
   lastname  String
-  email     String
+  email     String?   @unique
   date      DateTime?
   phone     String
   password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
-  Jobs      Jobs[]
+  jobs      Jobs[]
+  user      User?     @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Employee {
@@ -76,11 +80,13 @@ model Employee {
   password       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @default(now())
-  References     References[]
-  Studies        Studies[]
-  Skills         Skills[]
-  WorkExperience WorkExperience[]
-  Jobs           Jobs[]
+  references     References[]
+  studies        Studies[]
+  skills         Skills[]
+  workexperience WorkExperience[]
+  jobs           Jobs[]
+  user           User?            @relation(fields: [userId], references: [id])
+  userId         String?
 }
 
 model References {
@@ -126,6 +132,6 @@ model Jobs {
   description String
   workerId    String
   clientId    String
-  client      Client   @relation(fields: [clientId], references: [clientId])
+  client      Client   @relation(fields: [clientId], references: [id])
   employee    Employee @relation(fields: [workerId], references: [employeeId])
 }

@@ -5,12 +5,13 @@ import NavBar from "../../components/header/NavBar";
 
 interface Props {
   children: React.ReactNode;
+  session: any;
 }
 
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout: React.FC<Props> = ({ children, session }) => {
   return (
     <Box as="main">
-      <NavBar />
+      <NavBar session={session} />
 
       <Container maxW="full" overflow="hidden" p={0}>
         {children}

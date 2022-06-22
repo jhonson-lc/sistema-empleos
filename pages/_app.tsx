@@ -8,13 +8,13 @@ import Chakra from "../ui/structure/chakra";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Chakra>
-      <Layout>
-        <AnimatePresence exitBeforeEnter initial={false}>
-          <SessionProvider session={pageProps.session}>
+      <SessionProvider session={pageProps.session}>
+        <Layout session={pageProps.session}>
+          <AnimatePresence exitBeforeEnter initial={false}>
             <Component {...pageProps} />
-          </SessionProvider>
-        </AnimatePresence>
-      </Layout>
+          </AnimatePresence>
+        </Layout>
+      </SessionProvider>
     </Chakra>
   );
 }

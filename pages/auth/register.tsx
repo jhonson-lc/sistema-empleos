@@ -7,6 +7,9 @@ import {
   InputGroup,
   InputLeftAddon,
   Image,
+  useToast,
+  HStack,
+  Text,
 } from "@chakra-ui/react";
 import type { GetServerSideProps, NextPage } from "next";
 import React from "react";
@@ -14,9 +17,11 @@ import { useForm } from "react-hook-form";
 import { signIn, getSession } from "next-auth/react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-import FormControl from "../ui/form/FormControl";
-import InputCalendar from "../components/InputCalendar";
+import FormControl from "../../ui/form/FormControl";
+import InputCalendar from "../../components/InputCalendar";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -33,17 +38,38 @@ const SignUp: NextPage = ({ session }: any) => {
     formState: { errors },
     register,
     control,
+    reset,
   } = useForm();
+
+  const to = useToast();
+  const router = useRouter();
+
   async function onSubmit(values: any) {
     if (session) {
-      values = { ...values, email: session.user.email };
-      await axios.post("/api/register", values);
+      values = { ...values, email: session.user.email, user: session.user };
+      await axios.post("/api/createProfile", values).catch(() => {
+        router.push("/dashboard");
+      });
+      reset();
       return;
     }
-    const { email } = values;
-    await signIn("email", {
-      email,
+    const r = await axios.post("/api/register", {
+      email: values.email,
     });
+    const { email } = values;
+    if (r.data.message === "error") {
+      await signIn("email", {
+        email,
+      });
+    } else if (r.data.message === "success") {
+      to({
+        title: "Correo registrado",
+        description: "Ya tienes una cuenta, prueba a iniciar sesión",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   }
   const handleClick = () => setShow(!show);
 
@@ -76,6 +102,12 @@ const SignUp: NextPage = ({ session }: any) => {
                   placeholder="juanperez@yahoo.com"
                 />
               </FormControl>
+              <HStack fontSize={12} my={2}>
+                <Text>Ya tengo una cuenta?</Text>
+                <Button color="primary.500" fontSize={12} variant="link">
+                  <Link href="/auth/login">Iniciar Sesión</Link>
+                </Button>
+              </HStack>
               <Button colorScheme="primary" mt={5} type="submit">
                 Registrar
               </Button>
