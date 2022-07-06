@@ -33,11 +33,7 @@ const Main: React.FC<Props> = ({ data, session }) => {
       setDate(data.date);
     }
   }, [data]);
-  const {
-    handleSubmit,
-    formState: { errors },
-    register,
-  } = useForm();
+  const { handleSubmit, register } = useForm();
   const router = useRouter();
   const to = useToast();
   async function onSubmit() {
