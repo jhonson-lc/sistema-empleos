@@ -1,25 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { Text } from "@chakra-ui/react";
+import { Image } from "@chakra-ui/react";
 
 interface Props {
   size?: number;
 }
 
-const Logo: React.FC<Props> = ({ size = 24, ...props }) => {
+const Logo: React.FC<Props> = ({ size = 24 }) => {
   return (
     <Link href="/">
-      <Text
-        _focus={{ boxShadow: "none" }}
-        color="#ffffff"
-        cursor="pointer"
-        fontSize={size}
-        fontWeight={400}
-        p={8}
-        {...props}
-      >
-        WorkSearch
-      </Text>
+      <Image src="/logo.png" w={[16, 100]} />
     </Link>
   );
 };

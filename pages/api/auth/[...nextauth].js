@@ -1,27 +1,9 @@
 import NextAuth from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { PrismaClient } from "@prisma/client";
-import EmailProvider from "next-auth/providers/email";
 import CredentialsProvider from "next-auth/providers/credentials";
-
-const prisma = new PrismaClient();
+import prisma from "lib/prisma";
 
 export default NextAuth({
-  adapter: PrismaAdapter(prisma),
   providers: [
-    EmailProvider({
-      id: "email",
-      name: "email",
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
-      },
-      from: process.env.EMAIL_FROM,
-    }),
     CredentialsProvider({
       id: "credentials",
       name: "credentials",
@@ -31,12 +13,21 @@ export default NextAuth({
             email: credentials.email,
           },
         });
-        const isValid = await prisma.client.findFirst({
+        const isValid = await prisma.user.findFirst({
           where: {
             email: credentials.email,
             password: credentials.password,
           },
         });
+        if (!user) {
+          await prisma.user.create({
+            data: {
+              email: credentials.email,
+              password: credentials.password,
+              role: credentials.role,
+            },
+          });
+        }
         if (user && isValid) {
           return user;
         }
@@ -64,13 +55,30 @@ export default NextAuth({
         session.userId = token.sub;
       }
       if (session) {
-        const u = await prisma.client.findUnique({
+        const c = await prisma.client.findUnique({
           where: {
             email: session.user.email,
           },
         });
+        const e = await prisma.employee.findUnique({
+          where: {
+            email: session.user.email,
+          },
+        });
+        const u = await prisma.user.findUnique({
+          where: {
+            email: session.user.email,
+          },
+        });
+        if (c) {
+          session.user.name = c.firstname + " " + c.lastname;
+        }
+        if (e) {
+          session.user.name = e.firstname + " " + e.lastname;
+        }
         if (u) {
-          session.user.name = u.firstname + " " + u.lastname;
+          session.user.role = u.role;
+          session.user.id = u.id;
         }
       }
       return session;

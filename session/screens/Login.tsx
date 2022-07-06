@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -19,6 +20,7 @@ import FormControl from "../../ui/form/FormControl";
 
 const LoginScreen: React.FC = () => {
   const [show, setShow] = React.useState(false);
+  const router = useRouter();
   const toast = useToast();
   const {
     handleSubmit,
@@ -31,9 +33,9 @@ const LoginScreen: React.FC = () => {
       password: values.password,
       redirect: false,
     });
+
     if (!res) return;
-    // eslint-disable-next-line dot-notation
-    if (res["status"] === 401) {
+    if (res.status === 401) {
       toast({
         title: "Error",
         description: "Usuario o contraseña incorrectos",
@@ -43,28 +45,29 @@ const LoginScreen: React.FC = () => {
         isClosable: true,
       });
     }
-    // eslint-disable-next-line dot-notation
-    if (res["status"] === 200) {
-      await signIn("email", {
-        email: values.email,
-      });
+    if (res.status === 200) {
+      router.reload();
     }
   }
   return (
     <Stack
-      direction="row"
-      h="82vh"
-      justifyContent="right"
+      direction={{ base: "column", md: "row" }}
       overflow="hidden"
       position="relative"
       w="full"
     >
-      <Stack alignItems="start" gap={6} order={1} p={32}>
+      <Stack
+        alignItems="start"
+        gap={6}
+        order={{ base: 2, md: 0 }}
+        p={{ base: 4, md: 32 }}
+      >
         <Heading
           color="primary.500"
           fontSize={32}
           fontWeight={700}
           lineHeight={1}
+          textAlign="center"
         >
           Bienvenido a WorkSearch!
         </Heading>
@@ -73,11 +76,14 @@ const LoginScreen: React.FC = () => {
           tu próximo reto profesional. Contamos con herramientas para búsqueda
           de empleo.
         </Text>
-        <Stack direction="column" spacing={0} w={400}>
+        <Stack direction="column" spacing={0} w={{ base: "full", md: 400 }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl
               isRequired
-              error={errors.email && "Este campo es requerido"}
+              error={
+                errors.email &&
+                (errors.email.message || "Este campo es requerido")
+              }
               help="Nunca compartiremos su correo electrónico con nadie más"
               label="Correo Electrónico"
               name="email"
@@ -86,6 +92,10 @@ const LoginScreen: React.FC = () => {
                 {...register("email", {
                   required: true,
                   validate: (value) => value !== "",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "Correo electrónico inválido",
+                  },
                 })}
                 placeholder="juanperez@yahoo.com"
               />

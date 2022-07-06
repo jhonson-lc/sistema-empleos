@@ -8,23 +8,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+enum Role {
+  CLIENT
+  EMPLOYEE
 }
 
 model Session {
@@ -36,13 +22,13 @@ model Session {
 }
 
 model User {
-  id            String     @id @default(cuid())
-  email         String     @unique
-  emailVerified DateTime?
-  accounts      Account[]
-  sessions      Session[]
-  client        Client[]
-  employee      Employee[]
+  id       String     @id @default(cuid())
+  email    String     @unique
+  password String
+  role     Role
+  sessions Session[]
+  client   Client[]
+  employee Employee[]
 }
 
 model VerificationToken {
@@ -60,7 +46,6 @@ model Client {
   email     String    @unique
   date      DateTime?
   phone     String
-  password  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now())
   jobs      Jobs[]
@@ -73,11 +58,10 @@ model Employee {
   identification String
   firstname      String
   lastname       String
-  email          String
+  email          String           @unique
   date           DateTime?
   phone          String
   city           String
-  password       String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @default(now())
   references     References[]

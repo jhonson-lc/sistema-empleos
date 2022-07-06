@@ -61,7 +61,7 @@ const Navbar: React.FC<Props> = ({ session }) => {
             })}
           </Stack>
         )}
-        <Stack alignItems="center" direction="row" spacing={5}>
+        <Stack alignItems="center" direction="row" spacing={4}>
           {!session ? (
             <Stack
               alignItems="center"

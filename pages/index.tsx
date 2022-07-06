@@ -25,24 +25,30 @@ const Home: NextPage = () => {
       position="relative"
       w="full"
     >
-      <Stack alignItems="start" gap={6} p={32} w="50%">
+      <Stack
+        alignItems="start"
+        gap={6}
+        p={[12, 32]}
+        w={{ base: "100%", md: "50%" }}
+      >
         <Heading
           color="primary.500"
-          fontSize={52}
+          fontSize={[36, 48]}
           fontWeight={700}
           lineHeight={1}
+          textAlign="center"
         >
           Busca el empleo que se adapte a tus necesidades
         </Heading>
-        <Text color="#ffffff" fontSize={24}>
+        <Text color="#ffffff" fontSize={[18]}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua
         </Text>
         <Button
           bg="primary.500"
           color="#ffffff"
-          href="/help"
-          text="Mira cómo funciona"
+          href="/auth/register"
+          text="Crear una cuenta"
         />
       </Stack>
     </Stack>

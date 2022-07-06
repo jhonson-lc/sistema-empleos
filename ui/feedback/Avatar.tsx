@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface Props {
   scale?: number;
@@ -26,7 +27,7 @@ const variants = {
 
 const Avatar: React.FC<Props> = ({ session, image, scale }) => {
   const StackM = motion(HStack);
-
+  const router = useRouter();
   return (
     <StackM
       animate="enter"
@@ -43,12 +44,27 @@ const Avatar: React.FC<Props> = ({ session, image, scale }) => {
           as={Button}
           bg="none"
         >
-          <StackM>
-            <AvatarChakra src={image && image} />
-            {session && <Text color="white">{session.user.name}</Text>}
+          <StackM
+            alignItems="center"
+            bg="gray.200"
+            h={10}
+            justifyContent="center"
+            rounded="full"
+            w={10}
+          >
+            {session && (
+              <Text color="primary.500" fontSize={24}>
+                {session.user.name ? session.user.name.substring(0, 1) : "A"}
+              </Text>
+            )}
           </StackM>
         </MenuButton>
         <MenuList>
+          <MenuItem
+            onClick={() => router.push(`/dashboard/${session.user.id}`)}
+          >
+            Profile
+          </MenuItem>
           <MenuItem onClick={() => signOut()}>Cerrar Sesión</MenuItem>
         </MenuList>
       </Menu>

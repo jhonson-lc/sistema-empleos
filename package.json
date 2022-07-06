@@ -27,7 +27,8 @@
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.32.2",
-    "react-icons": "^4.4.0"
+    "react-icons": "^4.4.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -35,6 +36,7 @@
     "@types/react": "18.0.14",
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "18.0.5",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
     "@typescript-eslint/parser": "^5.28.0",
     "eslint": "^8.18.0",
@@ -48,7 +50,7 @@
     "eslint-plugin-react": "^7.30.0",
     "nodemon": "^2.0.16",
     "prettier": "^2.7.1",
-    "prisma": "^3.15.2",
+    "prisma": "^4.0.0",
     "typescript": "4.7.4"
   },
   "main": "BD.js",

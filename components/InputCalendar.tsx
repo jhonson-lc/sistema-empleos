@@ -25,13 +25,14 @@ const InputCalendar: React.FC<Props> = ({ name, control, errors }) => {
           dateFormat={`dd 'de' MMMM 'del' yyyy `}
           focusBorderColor={errors ? "red.500" : "primary.300"}
           locale="es"
-          placeholderText="Seleccione una fecha"
+          placeholderText={"Selecciona una fecha"}
           selected={value}
           timeIntervals={30}
+          value={value}
           onChange={onChange}
         />
       )}
-      rules={{ required: true, validate: (value) => value !== null }}
+      rules={{ validate: (value) => value !== null }}
     />
   );
 };

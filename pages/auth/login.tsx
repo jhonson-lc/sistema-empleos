@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (session) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: `/dashboard/${session.userId}`,
         permanent: false,
       },
     };

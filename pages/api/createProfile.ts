@@ -1,9 +1,8 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import prisma from 'lib/prisma';
 
 export default async function (req:any, res:any) {
   try {
-    const {date,user,email,firstname,lastname,password,phone} = req.body.data;
+    const {date,user,email,firstname,lastname,phone} = req.body.data;
 
     const profile = await prisma.client.create({
       data: {
@@ -11,7 +10,6 @@ export default async function (req:any, res:any) {
         lastname,
         email,
         phone,
-        password,
         date,
         user: { connect: {email: user.email}}
       },
