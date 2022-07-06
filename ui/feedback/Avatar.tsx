@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Text,
-  Avatar as AvatarChakra,
   HStack,
   Menu,
   Button,
@@ -15,7 +14,6 @@ import { useRouter } from "next/router";
 
 interface Props {
   scale?: number;
-  image?: string;
   session?: any;
 }
 
@@ -25,7 +23,7 @@ const variants = {
   exit: { opacity: 0 },
 };
 
-const Avatar: React.FC<Props> = ({ session, image, scale }) => {
+const Avatar: React.FC<Props> = ({ session, scale }) => {
   const StackM = motion(HStack);
   const router = useRouter();
   return (
