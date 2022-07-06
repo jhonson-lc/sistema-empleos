@@ -20,7 +20,7 @@ const SignUp: NextPage<Props> = ({ session }) => {
         <Text>Ya tienes un perfil creado</Text>
         <Button
           bg="primary.500"
-          href={`/dashboard/${session.user.id}`}
+          href={`/dashboard/${session.userId}`}
           text="Ir a mi perfil"
         />
       </VStack>
