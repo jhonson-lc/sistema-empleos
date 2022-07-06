@@ -68,16 +68,22 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
   return (
     <Stack
       alignItems="center"
-      direction="row"
+      direction={{ base: "column", lg: "row" }}
       position="relative"
-      px={12}
+      px={{ base: 4, lg: 12 }}
       w="full"
     >
-      <Stack alignItems="center" gap={6} pt={12} px={48}>
+      <Stack
+        alignItems="center"
+        gap={6}
+        order={{ base: 2, lg: 0 }}
+        pt={12}
+        px={{ base: 4, lg: 48 }}
+      >
         <Heading color="primary" fontSize={32} fontWeight={700} lineHeight={1}>
           Crear Perfil
         </Heading>
-        <Stack direction="column" spacing={0} w={400}>
+        <Stack direction="column" spacing={0} w={{ base: "full", lg: 400 }}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl
               isRequired
@@ -159,7 +165,7 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
           </form>
         </Stack>
       </Stack>
-      <Stack pr={24}>
+      <Stack pr={{ base: 0, lg: 24 }}>
         <Image src="../register.svg" />
       </Stack>
     </Stack>
