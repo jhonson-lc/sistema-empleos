@@ -55,7 +55,7 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
           duration: 9000,
           isClosable: true,
         });
-        router.push(`/dashboard/${session.user.id}`);
+        router.reload();
       });
   }
   return (

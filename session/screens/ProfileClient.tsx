@@ -61,14 +61,14 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
           duration: 9000,
           isClosable: true,
         });
-        router.push(`/dashboard/${session.user.id}`);
+        router.reload();
       });
     reset();
   }
   return (
     <Stack
       alignItems="center"
-      direction={{ base: "column", lg: "row" }}
+      direction={{ base: "column", md: "row" }}
       position="relative"
       px={{ base: 4, lg: 12 }}
       w="full"
@@ -165,7 +165,7 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
           </form>
         </Stack>
       </Stack>
-      <Stack pr={{ base: 0, lg: 24 }}>
+      <Stack pr={{ base: 0, lg: 24 }} w={{ base: "full", md: "50%" }}>
         <Image src="../register.svg" />
       </Stack>
     </Stack>
