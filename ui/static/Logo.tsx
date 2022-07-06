@@ -6,7 +6,7 @@ interface Props {
   size?: number;
 }
 
-const Logo: React.FC<Props> = ({ size = 24 }) => {
+const Logo: React.FC<Props> = () => {
   return (
     <Link href="/">
       <Image src="/logo.png" w={[16, 100]} />
