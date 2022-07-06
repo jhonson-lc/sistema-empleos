@@ -26,7 +26,6 @@ const ProfileClient: React.FC<Props> = ({ session }) => {
     formState: { errors },
     register,
     control,
-    reset,
   } = useForm();
   const router = useRouter();
   const to = useToast();
