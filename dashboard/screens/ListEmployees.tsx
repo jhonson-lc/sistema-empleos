@@ -1,3 +1,4 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   TableContainer,
   Table,
@@ -12,6 +13,8 @@ import {
   Heading,
   Spinner,
   Stack,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -23,6 +26,7 @@ interface Props {
 const ListEmployees: React.FC<Props> = ({ session }) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState<string>("init");
+  const to = useToast();
   React.useEffect(() => {
     setLoading("init");
     const res = async () => {
@@ -34,6 +38,7 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
     };
     res();
   }, []);
+
   return (
     <Stack alignItems="center" direction="column" w="full">
       {loading === "init" && <Spinner m={4} size="xl" />}
@@ -78,6 +83,32 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
                             Contactar
                           </Button>
                         </Link>
+                        <IconButton
+                          aria-label="Eliminar empleado"
+                          colorScheme="red"
+                          icon={<DeleteIcon />}
+                          onClick={async () => {
+                            await axios
+                              .post("/api/deleteEmployeer", {
+                                id: e.id,
+                              })
+                              .then(() => {
+                                setData(
+                                  data.filter(
+                                    (employee) => employee.id !== e.id,
+                                  ),
+                                );
+                                to({
+                                  title: "Eliminado",
+                                  description: "El empleado ha sido eliminado",
+                                  status: "success",
+                                  position: "top-right",
+                                  duration: 4000,
+                                  isClosable: true,
+                                });
+                              });
+                          }}
+                        />
                       </HStack>
                     </Td>
                   </Tr>

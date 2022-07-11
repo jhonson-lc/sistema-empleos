@@ -72,7 +72,7 @@ const Main: React.FC<Props> = ({ session }) => {
           description: "Se ha agregado correctamente a tu lista",
           status: "success",
           position: "top-right",
-          duration: 9000,
+          duration: 4000,
           isClosable: true,
         });
       })
@@ -82,7 +82,7 @@ const Main: React.FC<Props> = ({ session }) => {
           description: "Ya tienes este empleado en tu lista",
           status: "error",
           position: "top-right",
-          duration: 9000,
+          duration: 4000,
           isClosable: true,
         });
       });

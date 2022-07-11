@@ -1,4 +1,4 @@
-import { Text, HStack, Input, VStack } from "@chakra-ui/react";
+import { Text, HStack } from "@chakra-ui/react";
 
 type item = {
   text: string;
