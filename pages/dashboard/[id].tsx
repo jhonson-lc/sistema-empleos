@@ -97,11 +97,11 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
           w="full"
         >
           {loading === "init" && <Spinner size="xl" />}
-          {value === "main" && data && <Main />}
+          {value === "main" && data && <Main session={session} />}
           {value === "personal" && data && (
             <Personal data={data} session={session} />
           )}
-          {value === "list" && data && <ListEmployees />}
+          {value === "list" && data && <ListEmployees session={session} />}
         </StackM>
       </AnimatePresence>
     </Stack>

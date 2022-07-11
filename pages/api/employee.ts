@@ -1,6 +1,6 @@
 import prisma from 'lib/prisma'
 
-export default async function (req:any,res:any) {
+export default async function readEmployee(req:any,res:any) {
   try {
     const {email} = req.body;
     const client = await prisma.employee.findUnique({

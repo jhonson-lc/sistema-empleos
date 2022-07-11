@@ -24,6 +24,7 @@ const Main: React.FC<Props> = ({ data, session }) => {
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
+  const [email, setEmail] = React.useState<string>("");
   const [date, setDate] = React.useState<any>("");
   React.useEffect(() => {
     if (data) {
@@ -31,6 +32,7 @@ const Main: React.FC<Props> = ({ data, session }) => {
       setLastName(data.lastname);
       setPhone(data.phone);
       setDate(data.date);
+      setEmail(data.email);
     }
   }, [data]);
   const { handleSubmit, register } = useForm();
@@ -94,6 +96,15 @@ const Main: React.FC<Props> = ({ data, session }) => {
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
+            </Stack>
+            <Stack
+              direction={{ base: "column", lg: "row" }}
+              w={{ base: 290, lg: 600 }}
+            >
+              <Text fontSize={16} fontWeight={600} minW={200}>
+                Email
+              </Text>
+              <Input isReadOnly placeholder="Peréz" value={email} />
             </Stack>
             <Stack
               direction={{ base: "column", lg: "row" }}

@@ -1,18 +1,19 @@
-import { Text, HStack, Input } from "@chakra-ui/react";
+import { Text, HStack, Input, VStack } from "@chakra-ui/react";
 
 type item = {
   text: string;
   value: string;
-  onChange?: any;
 };
 
-const ItemInformation = ({ text, value, onChange }: item) => {
+const ItemInformation = ({ text, value }: item) => {
   return (
-    <HStack w={600}>
-      <Text fontSize={16} fontWeight={600} minW={200}>
-        {text}
+    <HStack justify="start">
+      <Text fontSize={14} fontWeight={500}>
+        {text} :
       </Text>
-      <Input value={value} onChange={onChange} />
+      <Text fontSize={14} fontWeight={500}>
+        {value}
+      </Text>
     </HStack>
   );
 };
