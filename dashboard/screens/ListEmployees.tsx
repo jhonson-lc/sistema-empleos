@@ -52,7 +52,7 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
           <Heading color="primary.500" mb={6} textAlign="center">
             Tus Empleados
           </Heading>
-          <Table colorScheme="teal" variant="striped">
+          <Table colorScheme="linkedin" variant="striped">
             <Thead>
               <Tr>
                 <Th>Empleado</Th>

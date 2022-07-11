@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Box, Spinner, Stack, Text } from "@chakra-ui/react";
+import { Badge, Box, Spinner, Stack, Text } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { AnimatePresence, motion } from "framer-motion";
@@ -61,7 +61,7 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
   }, []);
   if (!user) return <CreateProfile session={session} />;
   return (
-    <Stack direction={{ base: "column", lg: "row" }} w="full">
+    <Stack direction={{ base: "column", lg: "row" }} pos="relative" w="full">
       <Stack
         bg="primary.500"
         borderTopColor="white"
@@ -78,13 +78,26 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
               color={item.value === value ? "primary.500" : "white"}
               cursor="pointer"
               p={5}
-              onClick={() => setValue(item.value)}
+              onClick={() => {
+                setValue(item.value);
+              }}
             >
               <Text>{item.name}</Text>
             </Box>
           );
         })}
       </Stack>
+      <Badge
+        colorScheme="red"
+        fontSize="xs"
+        p={2}
+        pos="absolute"
+        right={0}
+        top={2}
+        variant="solid"
+      >
+        {session.user.role}
+      </Badge>
       <AnimatePresence>
         <StackM
           alignItems={"start"}

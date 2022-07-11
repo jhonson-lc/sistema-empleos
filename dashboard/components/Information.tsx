@@ -23,6 +23,7 @@ interface Props {
 }
 
 const Information: React.FC<Props> = ({ isOpen, data, onClose }) => {
+  console.log(data);
   if (!data) return;
   return (
     <>
