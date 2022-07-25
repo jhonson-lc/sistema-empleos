@@ -62,6 +62,7 @@ model Employee {
   date           DateTime?
   phone          String
   city           String
+  profession     String
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @default(now())
   references     References[]
@@ -78,6 +79,7 @@ model References {
   firstname   String
   lastname    String
   phonenumber String
+  relation    String?
   workerId    String
   employee    Employee @relation(fields: [workerId], references: [employeeId])
 }
@@ -112,8 +114,9 @@ model WorkExperience {
 model Jobs {
   id          String   @id @default(cuid())
   state       String
-  valoration  String
+  valoration  Float
   description String
+  createdAt   DateTime @default(now())
   workerId    String
   clientId    String
   client      Client   @relation(fields: [clientId], references: [id])

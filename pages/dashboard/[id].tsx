@@ -5,8 +5,13 @@ import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { AnimatePresence, motion } from "framer-motion";
 import CreateProfile from "session/screens/CreateProfile";
+import MainE from "dashboard/screens/MainE";
+import PersonalE from "dashboard/screens/PersonalE";
 
-import { ITEM_DASHBOARD } from "../../dashboard/constants";
+import {
+  ITEMS_DASHBOARD_CLIENT,
+  ITEMS_DASHBOARD_EMPLOYEE,
+} from "../../dashboard/constants";
 import { LinkDashboard, User } from "../../dashboard/types";
 import Main from "../../dashboard/screens/Main";
 import Personal from "../../dashboard/screens/Personal";
@@ -44,10 +49,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const Dashboard: React.FC<Props> = ({ session, user }) => {
   const [data, setData] = React.useState<User>();
   const [loading, setLoading] = React.useState("init");
-  const [value, setValue] = React.useState<LinkDashboard["value"]>("main");
+  const [value, setValue] = React.useState<LinkDashboard["value"]>();
   const StackM = motion(Stack);
 
   React.useEffect(() => {
+    setValue(session.user?.role === "EMPLOYEE" ? "mainE" : "main");
     const u =
       session.user.role === "EMPLOYEE" ? "/api/employee/" : "/api/user/";
     const data = async () => {
@@ -70,7 +76,10 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
         minW={{ base: "full", lg: "250px" }}
         w="300px"
       >
-        {ITEM_DASHBOARD.map((item) => {
+        {(session.user.role === "CLIENT"
+          ? ITEMS_DASHBOARD_CLIENT
+          : ITEMS_DASHBOARD_EMPLOYEE
+        ).map((item) => {
           return (
             <Box
               key={item.id}
@@ -111,8 +120,12 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
         >
           {loading === "init" && <Spinner size="xl" />}
           {value === "main" && data && <Main session={session} />}
+          {value === "mainE" && data && <MainE session={session} />}
           {value === "personal" && data && (
             <Personal data={data} session={session} />
+          )}
+          {value === "personalE" && data && (
+            <PersonalE data={data} session={session} />
           )}
           {value === "list" && data && <ListEmployees session={session} />}
         </StackM>

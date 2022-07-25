@@ -161,7 +161,7 @@ const SignUp: NextPage = () => {
               <Checkbox
                 colorScheme="red"
                 fontWeight={600}
-                id="client"
+                id="politicas"
                 size="sm"
                 spacing="1rem"
                 {...register("poli", {

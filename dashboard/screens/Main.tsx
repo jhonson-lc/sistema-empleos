@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Information from "dashboard/components/Information";
+import oneDecimal from "utils/oneDecimal";
 
 interface Props {
   session: any;
@@ -128,10 +129,17 @@ const Main: React.FC<Props> = ({ session }) => {
                 return (
                   <Tr key={e.employeeId}>
                     <Td>{e.firstname + " " + e.lastname}</Td>
-                    <Td>{e.experience[0].position}</Td>
+                    <Td>{e.profession}</Td>
                     <Td>{e.city}</Td>
                     <Td isNumeric>{e.job.length || 0}</Td>
-                    <Td isNumeric>{e.job.valoration || 0}/5</Td>
+                    <Td textAlign="center">
+                      {oneDecimal(
+                        e.job.reduce((valoration, e) => {
+                          return valoration + e.valoration;
+                        }, 0) / e.job.length || 0,
+                      )}
+                      {" / 10"}
+                    </Td>
                     <Td>
                       <HStack>
                         <Button

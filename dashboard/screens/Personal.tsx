@@ -20,7 +20,7 @@ interface Props {
   session: any;
 }
 
-const Main: React.FC<Props> = ({ data, session }) => {
+const Personal: React.FC<Props> = ({ data, session }) => {
   const [firstName, setFirstName] = React.useState<string>("");
   const [lastName, setLastName] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
@@ -51,7 +51,7 @@ const Main: React.FC<Props> = ({ data, session }) => {
       })
       .then(() => {
         to({
-          title: "Perfil actuazlizado",
+          title: "Perfil actualizado",
           description: "Tu perfil ha sido actualizado con éxito",
           status: "success",
           duration: 9000,
@@ -151,4 +151,4 @@ const Main: React.FC<Props> = ({ data, session }) => {
   );
 };
 
-export default Main;
+export default Personal;

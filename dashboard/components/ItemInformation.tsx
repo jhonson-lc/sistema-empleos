@@ -8,10 +8,10 @@ type item = {
 const ItemInformation = ({ text, value }: item) => {
   return (
     <HStack justify="start">
-      <Text fontSize={14} fontWeight={500}>
+      <Text fontSize={14} fontWeight={600}>
         {text} :
       </Text>
-      <Text fontSize={14} fontWeight={500}>
+      <Text fontSize={14} fontWeight={300}>
         {value}
       </Text>
     </HStack>

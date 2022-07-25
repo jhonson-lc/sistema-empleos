@@ -23,7 +23,6 @@ interface Props {
 }
 
 const Information: React.FC<Props> = ({ isOpen, data, onClose }) => {
-  console.log(data);
   if (!data) return;
   return (
     <>
@@ -31,7 +30,8 @@ const Information: React.FC<Props> = ({ isOpen, data, onClose }) => {
         isCentered
         isOpen={isOpen}
         motionPreset="slideInBottom"
-        size="2xl"
+        scrollBehavior="inside"
+        size="3xl"
         onClose={onClose}
       >
         <ModalOverlay />
@@ -44,22 +44,24 @@ const Information: React.FC<Props> = ({ isOpen, data, onClose }) => {
                 <Heading color="primary.500" my={2} size="md">
                   Información Personal
                 </Heading>
-                <ItemInformation text="Cédula" value={data.identification} />
-                <ItemInformation
-                  text="Nombre"
-                  value={data.firstname + " " + data.lastname}
-                />
-                <ItemInformation text="Email" value={data.email} />
-                <ItemInformation text="Telefóno" value={data.phone} />
-                <ItemInformation text="Ciudad" value={data.city} />
-                <ItemInformation
-                  text="Edad"
-                  value={
-                    "" +
-                    differenceInYears(new Date(), parseISO(data.date)) +
-                    " años"
-                  }
-                />
+                <div>
+                  <ItemInformation text="Cédula" value={data.identification} />
+                  <ItemInformation
+                    text="Nombre"
+                    value={data.firstname + " " + data.lastname}
+                  />
+                  <ItemInformation text="Email" value={data.email} />
+                  <ItemInformation text="Telefóno" value={data.phone} />
+                  <ItemInformation text="Ciudad" value={data.city} />
+                  <ItemInformation
+                    text="Edad"
+                    value={
+                      "" +
+                      differenceInYears(new Date(), parseISO(data.date)) +
+                      " años"
+                    }
+                  />
+                </div>
               </Stack>
               <Stack>
                 <Heading color="primary.500" my={2} size="md">
@@ -67,10 +69,55 @@ const Information: React.FC<Props> = ({ isOpen, data, onClose }) => {
                 </Heading>
                 {data.experience.map((ex) => {
                   return (
-                    <div key={ex.text}>
+                    <div key={ex.id}>
                       <ItemInformation text="Empresa" value={ex.company} />
                       <ItemInformation text="Cargo" value={ex.position} />
                       <ItemInformation text="Teléfono" value={data.phone} />
+                    </div>
+                  );
+                })}
+              </Stack>
+              <Stack>
+                <Heading color="primary.500" my={2} size="md">
+                  Estudios académicos
+                </Heading>
+                {data.studies.map((ex) => {
+                  return (
+                    <div key={ex.id}>
+                      <ItemInformation text="Nivel" value={ex.level} />
+                      <ItemInformation text="Institución" value={ex.school} />
+                      <ItemInformation
+                        text="Título obtenido"
+                        value={ex.academic}
+                      />
+                    </div>
+                  );
+                })}
+              </Stack>
+              <Stack>
+                <Heading color="primary.500" my={2} size="md">
+                  Habilidades
+                </Heading>
+                {data.skills.map((ex) => {
+                  return (
+                    <div key={ex.id}>
+                      <ItemInformation text=":" value={ex.description} />
+                    </div>
+                  );
+                })}
+              </Stack>
+              <Stack>
+                <Heading color="primary.500" my={2} size="md">
+                  Referencias
+                </Heading>
+                {data.references.map((ex) => {
+                  return (
+                    <div key={ex.id}>
+                      <ItemInformation
+                        text="Nombre"
+                        value={ex.firstname + " " + ex.lastname}
+                      />
+                      <ItemInformation text="Telefóno" value={ex.phonenumber} />
                     </div>
                   );
                 })}

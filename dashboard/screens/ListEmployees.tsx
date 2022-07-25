@@ -1,4 +1,4 @@
-import { DeleteIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, NotAllowedIcon } from "@chakra-ui/icons";
 import {
   TableContainer,
   Table,
@@ -15,8 +15,10 @@ import {
   Stack,
   IconButton,
   useToast,
+  useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
+import Valoracion from "dashboard/components/Valoración";
 import React from "react";
 
 interface Props {
@@ -26,18 +28,20 @@ interface Props {
 const ListEmployees: React.FC<Props> = ({ session }) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState<string>("init");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selected, setSelected] = React.useState();
+
   const to = useToast();
   React.useEffect(() => {
     setLoading("init");
     const res = async () => {
-      const r = await axios.post("/api/myEmployeers", session);
-      if (r.status === 200) {
-        setData(r.data.filter((e) => e !== null));
+      await axios.post("/api/myEmployeers", session).then((res) => {
+        setData(res.data.filter((e) => e !== null));
         setLoading("success");
-      }
+      });
     };
     res();
-  }, []);
+  }, [to]);
 
   return (
     <Stack alignItems="center" direction="column" w="full">
@@ -58,7 +62,7 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
                 <Th>Empleado</Th>
                 <Th>Ciudad</Th>
                 <Th>Estado</Th>
-                <Th isNumeric>Valoración</Th>
+                <Th>Valoración</Th>
                 <Th isNumeric>N. de servicios</Th>
               </Tr>
             </Thead>
@@ -71,44 +75,104 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
                     </Td>
                     <Td>{e.employeer.city}</Td>
                     <Td>{e.state}</Td>
-                    <Td>{e.valoration}</Td>
+                    <Td textAlign="center">
+                      {e.valoration === 0 ? (
+                        <Button
+                          colorScheme="linkedin"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            setSelected(e);
+                            onOpen();
+                          }}
+                        >
+                          Valorar
+                        </Button>
+                      ) : (
+                        e.valoration + " / 10"
+                      )}
+                    </Td>
                     <Td isNumeric>{e.employeer.jobs.length}</Td>
                     <Td>
-                      <HStack>
-                        <Link
-                          isExternal
-                          href={`https://wa.me/5930${e.employeer.phone}`}
-                        >
-                          <Button colorScheme="red" size="sm" variant="outline">
-                            Contactar
-                          </Button>
-                        </Link>
-                        <IconButton
-                          aria-label="Eliminar empleado"
-                          colorScheme="red"
-                          icon={<DeleteIcon />}
-                          onClick={async () => {
-                            await axios
-                              .post("/api/deleteEmployeer", {
-                                id: e.id,
-                              })
-                              .then(() => {
-                                setData(
-                                  data.filter(
-                                    (employee) => employee.id !== e.id,
-                                  ),
-                                );
-                                to({
-                                  title: "Eliminado",
-                                  description: "El empleado ha sido eliminado",
-                                  status: "success",
-                                  position: "top-right",
-                                  duration: 4000,
-                                  isClosable: true,
-                                });
-                              });
-                          }}
-                        />
+                      <HStack justify="end">
+                        {e.state === "pendiente" && (
+                          <Link
+                            isExternal
+                            href={`https://wa.me/5930${e.employeer.phone}`}
+                          >
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              variant="outline"
+                            >
+                              Contactar
+                            </Button>
+                          </Link>
+                        )}
+                        {e.state !== "finalizado" && (
+                          <>
+                            <IconButton
+                              aria-label="Cancelar empleado"
+                              colorScheme="red"
+                              icon={<NotAllowedIcon />}
+                              onClick={async () => {
+                                await axios
+                                  .post("/api/deleteEmployeer", {
+                                    id: e.id,
+                                  })
+                                  .then(() => {
+                                    to({
+                                      title: "Cancelado",
+                                      description:
+                                        "El empleado ha sido cancelado",
+                                      status: "success",
+                                      position: "top-right",
+                                      duration: 4000,
+                                      isClosable: true,
+                                    });
+                                    setData(
+                                      data.map((em) => {
+                                        if (em.id === e.id) {
+                                          em.state = "cancelado";
+                                        }
+                                        return em;
+                                      }),
+                                    );
+                                  });
+                              }}
+                            />
+                            <IconButton
+                              aria-label="Contratar empleado"
+                              colorScheme="green"
+                              icon={<CheckCircleIcon />}
+                              onClick={async () => {
+                                await axios
+                                  .post("/api/asignEmployeer", {
+                                    id: e.id,
+                                  })
+                                  .then(() => {
+                                    to({
+                                      title: "Contratado",
+                                      description:
+                                        "El empleado ha sido contratado",
+                                      status: "success",
+                                      position: "top-right",
+                                      duration: 4000,
+                                      isClosable: true,
+                                    });
+                                    setData(
+                                      data.map((em) => {
+                                        if (em.id === e.id) {
+                                          em.state = "pendiente";
+                                        }
+                                        return em;
+                                      }),
+                                    );
+                                  });
+                              }}
+                            />
+                          </>
+                        )}
                       </HStack>
                     </Td>
                   </Tr>
@@ -118,6 +182,7 @@ const ListEmployees: React.FC<Props> = ({ session }) => {
           </Table>
         </TableContainer>
       )}
+      <Valoracion data={selected} isOpen={isOpen} onClose={onClose} />
     </Stack>
   );
 };

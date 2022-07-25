@@ -1,6 +1,6 @@
 import { LinkDashboard } from "./types";
 
-export const ITEM_DASHBOARD:LinkDashboard[]= [
+export const ITEMS_DASHBOARD_CLIENT:LinkDashboard[]= [
     {
         id: 1,
         name: "Página principal",
@@ -15,6 +15,19 @@ export const ITEM_DASHBOARD:LinkDashboard[]= [
         id: 3,
         name: "Lista de empleados",
         value: "list"
+    }
+]
+
+export const ITEMS_DASHBOARD_EMPLOYEE:LinkDashboard[]= [
+    {
+        id: 1,
+        name: "Página principal",
+        value: "mainE"
+    },
+    {
+        id: 2,
+        name: "Información personal",
+        value: "personalE"
     }
 ]
 

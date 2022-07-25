@@ -19,8 +19,8 @@ export default async function addEmployeer(req:any, res:any) {
 
     const profile = await prisma.jobs.create({
       data: {
-        state: 'pending',
-        valoration: "0",
+        state: 'pendiente',
+        valoration: 0,
         description: "",
         client: { connect: {email: session.user.email}},
         employee: { connect: {email: data.email}},
