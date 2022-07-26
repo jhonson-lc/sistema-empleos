@@ -8,6 +8,7 @@ export default async function addEmployeer(req:any, res:any) {
         where: {
             client: { email: session.user.email},
             employee: { email: data.email},
+            state:"pendiente"
         }
     })
 

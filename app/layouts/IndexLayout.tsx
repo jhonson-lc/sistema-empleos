@@ -14,7 +14,7 @@ const Layout: React.FC<Props> = ({ children, session }) => {
     <Box as="main">
       <NavBar session={session} />
 
-      <Container maxW="full" minH="80vh" overflow="hidden" p={0}>
+      <Container maxW="full" overflow="hidden" p={0}>
         {children}
       </Container>
       <Footer />

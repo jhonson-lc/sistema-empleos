@@ -24,6 +24,7 @@ import React from "react";
 import axios from "axios";
 import FormControl from "ui/form/FormControl";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 interface Props {
   onClose: () => void;
@@ -40,6 +41,7 @@ const Valoracion: React.FC<Props> = ({ isOpen, data, onClose }) => {
     formState: { errors },
     register,
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (values: any) => {
     data = { ...data, obs: values.obs };
@@ -53,6 +55,7 @@ const Valoracion: React.FC<Props> = ({ isOpen, data, onClose }) => {
         isClosable: true,
       });
       onClose();
+      router.reload();
     });
   };
   if (!data) return;
@@ -133,10 +136,15 @@ const Valoracion: React.FC<Props> = ({ isOpen, data, onClose }) => {
               </SimpleGrid>
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                variant="ghost"
+                onClick={onClose}
+              >
                 Cancelar
               </Button>
-              <Button colorScheme="blue" type="submit" variant="ghost">
+              <Button colorScheme="blue" type="submit">
                 Enviar
               </Button>
             </ModalFooter>

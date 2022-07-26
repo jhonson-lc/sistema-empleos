@@ -9,7 +9,7 @@ interface Props {
 const Logo: React.FC<Props> = () => {
   return (
     <Link href="/">
-      <Image src="/logo.png" w={[16, 100]} />
+      <Image cursor="pointer" src="/logo.png" w={[16, 100]} />
     </Link>
   );
 };

@@ -72,7 +72,8 @@ const Dashboard: React.FC<Props> = ({ session, user }) => {
         bg="primary.500"
         borderTopColor="white"
         borderTopWidth={{ base: "1px", lg: "0px" }}
-        h={{ base: "full", lg: "85vh" }}
+        h="auto"
+        minH={["10vh", "10vh", "10vh", "85vh"]}
         minW={{ base: "full", lg: "250px" }}
         w="300px"
       >

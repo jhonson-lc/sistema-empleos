@@ -32,6 +32,15 @@ const SignUp: NextPage = () => {
 
   async function onSubmit(values: any) {
     const { email, password, rol } = values;
+    if (rol[0] && rol[1])
+      return to({
+        title: "Error",
+        description: "Debe seleccionar solo un rol",
+        status: "error",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
     if (!rol[0] && !rol[1])
       return to({
         title: "Error",
@@ -155,11 +164,10 @@ const SignUp: NextPage = () => {
             </FormControl>
             <FormControl
               isRequired
-              error={errors.poli && "Para continuar, acepte los términos"}
+              error={errors.poli && "Para continuar, acepte las políticas"}
               name="poli"
             >
               <Checkbox
-                colorScheme="red"
                 fontWeight={600}
                 id="politicas"
                 size="sm"
