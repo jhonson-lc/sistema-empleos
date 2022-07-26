@@ -46,7 +46,7 @@ const Main: React.FC<Props> = ({ session }) => {
 
   const filteredEmployeers = data.filter((employeer) => {
     if (searchPosition && !searchCity) {
-      return employeer.experience[0].position
+      return employeer.profession
         .toLowerCase()
         .includes(searchPosition.toLowerCase());
     }
@@ -55,7 +55,7 @@ const Main: React.FC<Props> = ({ session }) => {
     }
     if (searchPosition && searchCity) {
       return (
-        employeer.experience[0].position
+        employeer.profession
           .toLowerCase()
           .includes(searchPosition.toLowerCase()) &&
         employeer.city.toLowerCase().includes(searchCity.toLowerCase())
