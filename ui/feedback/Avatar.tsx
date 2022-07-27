@@ -51,7 +51,7 @@ const Avatar: React.FC<Props> = ({ session, scale }) => {
             w={10}
           >
             {session && (
-              <Text color="primary.500" fontSize={24}>
+              <Text color="primary.500" fontSize={24} m={0}>
                 {session.user.name ? session.user.name.substring(0, 1) : "A"}
               </Text>
             )}

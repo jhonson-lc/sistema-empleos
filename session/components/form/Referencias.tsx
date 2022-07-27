@@ -1,4 +1,14 @@
-import { Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import {
+  HStack,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  useToast,
+} from "@chakra-ui/react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import React from "react";
 import FormControl from "ui/form/FormControl";
 
@@ -8,12 +18,50 @@ interface Props {
   errors: any;
   register: any;
   index: number;
+  data?: any;
 }
 
-const Referencias: React.FC<Props> = ({ errors, register, index }) => {
+const Referencias: React.FC<Props> = ({ data, errors, register, index }) => {
+  const [show, setShow] = React.useState<boolean>(false);
+  const to = useToast();
+  const router = useRouter();
+  React.useEffect(() => {
+    if (data) {
+      if (data[index]) {
+        setShow(true);
+      }
+    }
+  }, [data]);
   return (
     <>
-      <Numb index={index} />
+      <HStack justify={"space-between"} w="full">
+        <Numb index={index} />
+        {show && (
+          <IconButton
+            aria-label="Eliminar habilidad"
+            colorScheme="red"
+            icon={<DeleteIcon />}
+            onClick={async () => {
+              await axios
+                .post("/api/deleteReference", {
+                  id: data[index].id,
+                  ref: "references",
+                })
+                .then(() => {
+                  to({
+                    title: "Referencia eliminada",
+                    description: "La referencia ha sido eliminada con éxito",
+                    status: "success",
+                    position: "top-right",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                });
+              router.reload();
+            }}
+          />
+        )}
+      </HStack>
       <FormControl
         isRequired
         error={

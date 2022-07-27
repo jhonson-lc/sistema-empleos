@@ -7,13 +7,26 @@ interface Props {
 }
 
 const Botones: React.FC<Props> = ({ setState, state }) => {
+  const [tot, setTot] = React.useState<number>(state);
   return (
     <HStack justify="center" pb={6}>
-      <Button colorScheme="green" onClick={() => setState(state + 1)}>
+      <Button
+        colorScheme="green"
+        onClick={() => {
+          setState(state + 1);
+          setTot(tot);
+        }}
+      >
         +
       </Button>
-      {state > 1 && (
-        <Button colorScheme="red" onClick={() => setState(state - 1)}>
+      {state > tot && (
+        <Button
+          colorScheme="red"
+          onClick={() => {
+            setState(state - 1);
+            setTot(tot);
+          }}
+        >
           -
         </Button>
       )}

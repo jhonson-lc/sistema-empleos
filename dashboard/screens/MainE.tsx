@@ -1,5 +1,6 @@
 import { ArrowUpIcon, ArrowDownIcon } from "@chakra-ui/icons";
 import {
+  Text,
   TableContainer,
   Table,
   Thead,
@@ -68,15 +69,16 @@ const MainE: React.FC<Props> = ({ session }) => {
   }, [order]);
 
   return (
-    <Stack alignItems="center" direction="column" w="full">
-      {data.length === 0 && loading !== "init" && (
+    <Stack alignItems="center" direction="column" minH="56vh" w="full">
+      {data.length === 0 && loading !== "init" ? (
         <Heading color="primary.500" mb={6} textAlign="center">
           No tienes contratos
         </Heading>
+      ) : (
+        <Heading color="primary.500" textAlign="center">
+          Tus contratos
+        </Heading>
       )}
-      <Heading color="primary.500" textAlign="center">
-        Tus contratos
-      </Heading>
       <Badge colorScheme={"black"} pb={6}>
         Tu valoración{" "}
         {oneDecimal(
@@ -158,14 +160,16 @@ const MainE: React.FC<Props> = ({ session }) => {
                 })
               ) : (
                 <Tr
-                  left={20}
-                  m={12}
+                  left={[0, 24]}
+                  m={[0, 12]}
                   pos="absolute"
                   right={0}
                   textAlign={"center"}
                   w="full"
                 >
-                  No hay empleados en estado {stateEmployee}
+                  <Text>
+                    No hay empleados <br /> en estado {stateEmployee}
+                  </Text>
                 </Tr>
               )}
             </Tbody>

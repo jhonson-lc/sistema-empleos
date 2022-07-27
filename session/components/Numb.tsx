@@ -7,7 +7,7 @@ interface Props {
 
 const Numb: React.FC<Props> = ({ index }) => {
   return (
-    <HStack justify="center">
+    <HStack justify="center" w={5}>
       <HStack
         border="1px solid blue"
         h={5}

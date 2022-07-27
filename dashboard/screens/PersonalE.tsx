@@ -165,6 +165,7 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                 return (
                   <Experiencia
                     key={index}
+                    data={data.experience}
                     errors={errors}
                     index={index}
                     register={register}
@@ -187,6 +188,7 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                 return (
                   <Referencias
                     key={index}
+                    data={data.references}
                     errors={errors}
                     index={index}
                     register={register}
@@ -209,6 +211,7 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                 return (
                   <Habilidades
                     key={index}
+                    data={data.skills}
                     errors={errors}
                     index={index}
                     register={register}
@@ -231,6 +234,7 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                 return (
                   <Estudios
                     key={index}
+                    data={data.studies}
                     errors={errors}
                     index={index}
                     register={register}
