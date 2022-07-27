@@ -58,7 +58,10 @@ const Estudios: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.nivelE && (errors.nivelE.message || "Este campo es requerido")
+          errors?.studies &&
+          errors?.studies[index] !== undefined &&
+          errors?.studies[index]?.level !== undefined &&
+          (errors?.studies[index]?.level?.message || "Este campo es requerido")
         }
         label="Nivel de estudio"
         name={`studies.${index}.level`}
@@ -78,7 +81,10 @@ const Estudios: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.insti && (errors.insti.message || "Este campo es requerido")
+          errors?.studies &&
+          errors?.studies[index] !== undefined &&
+          errors?.studies[index]?.school !== undefined &&
+          (errors?.studies[index]?.school?.message || "Este campo es requerido")
         }
         label="Institución"
         name={`studies.${index}.school`}
@@ -99,7 +105,11 @@ const Estudios: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.titleO && (errors.titleO.message || "Este campo es requerido")
+          errors?.studies &&
+          errors?.studies[index] !== undefined &&
+          errors?.studies[index]?.academic !== undefined &&
+          (errors?.studies[index]?.academic?.message ||
+            "Este campo es requerido")
         }
         label="Título obtenido"
         name={`studies.${index}.academic`}

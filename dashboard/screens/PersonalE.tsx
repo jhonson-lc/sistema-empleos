@@ -12,7 +12,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
-import EmploInformation from "dashboard/components/EmploInformation";
 import Estudios from "session/components/form/Estudios";
 import Botones from "session/components/Botones";
 import Habilidades from "session/components/form/Habilidades";
@@ -20,6 +19,7 @@ import Referencias from "session/components/form/Referencias";
 import { useRouter } from "next/router";
 import { format } from "date-fns";
 import Experiencia from "session/components/form/Experiencia";
+import FormControl from "ui/form/FormControl";
 
 import { User } from "../types";
 
@@ -82,7 +82,15 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
               >
                 Datos Personales
               </Heading>
-              <EmploInformation text="Cédula">
+              <FormControl
+                isRequired
+                error={
+                  errors.identification &&
+                  (errors.identification.message || "Este campo es requerido")
+                }
+                label="Cédula"
+                name="identification"
+              >
                 <Input
                   {...register("identification", {
                     validate: (value) => value !== "",
@@ -93,8 +101,16 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                   })}
                   placeholder="1724859645"
                 />
-              </EmploInformation>
-              <EmploInformation text="Nombre">
+              </FormControl>
+              <FormControl
+                isRequired
+                error={
+                  errors.firstname &&
+                  (errors.firstname.message || "Este campo es requerido")
+                }
+                label="Nombre"
+                name="firstname"
+              >
                 <Input
                   {...register("firstname", {
                     pattern: /^[a-zA-Z]+$/,
@@ -102,8 +118,16 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                   })}
                   placeholder="Juan"
                 />
-              </EmploInformation>
-              <EmploInformation text="Apellido">
+              </FormControl>
+              <FormControl
+                isRequired
+                error={
+                  errors.lastname &&
+                  (errors.lastname.message || "Este campo es requerido")
+                }
+                label="Apellido"
+                name="lastname"
+              >
                 <Input
                   {...register("lastname", {
                     pattern: /^[a-zA-Z]+$/,
@@ -111,11 +135,16 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                   })}
                   placeholder="Peréz"
                 />
-              </EmploInformation>
-              <EmploInformation text="Email">
+              </FormControl>
+              <FormControl label="Email" name="email">
                 <Input isReadOnly {...register("email")} placeholder="Peréz" />
-              </EmploInformation>
-              <EmploInformation text="Fecha de Nacimiento">
+              </FormControl>
+              <FormControl
+                isRequired
+                error={errors.date && "Este campo es requerido"}
+                label="Fecha de nacimiento"
+                name="date"
+              >
                 <Input
                   type="date"
                   {...register("date", {
@@ -124,8 +153,14 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                   defaultValue={format(new Date(data.date), "yyyy-MM-dd")}
                   placeholder="dd/mm/aaaa"
                 />
-              </EmploInformation>
-              <EmploInformation text="Fecha de Teléfono/Celular">
+              </FormControl>
+              <FormControl
+                isRequired
+                error={errors.phone && "Son 9 dígitos válidos"}
+                help="Ej: 0987654321 ó 021212345"
+                label="Teléfono/Celular"
+                name="phone"
+              >
                 <InputGroup>
                   <InputLeftAddon children="+593" pointerEvents="none" />
                   <Input
@@ -137,11 +172,27 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                     type="number"
                   />
                 </InputGroup>
-              </EmploInformation>
-              <EmploInformation text="Ciudad">
-                <Input {...register("city")} placeholder="Ambato" />
-              </EmploInformation>
-              <EmploInformation text="Profesión">
+              </FormControl>
+              <FormControl
+                isRequired
+                error={errors.city && "Este campo es requerido"}
+                label="Ciudad"
+                name="city"
+              >
+                <Input
+                  {...register("city", {
+                    required: true,
+                    validate: (value) => value !== "",
+                  })}
+                  placeholder="Ambato"
+                />
+              </FormControl>
+              <FormControl
+                isRequired
+                error={errors.profession && "Este campo es requerido"}
+                label="Profesión"
+                name="profession"
+              >
                 <Input
                   {...register("profession", {
                     required: true,
@@ -149,7 +200,7 @@ const PersonalE: React.FC<Props> = ({ data, session }) => {
                   })}
                   placeholder="Scrum Master"
                 />
-              </EmploInformation>
+              </FormControl>
             </Stack>
             <Stack bg="whiteAlpha.900" boxShadow="md" p={4} rounded="lg">
               <Heading

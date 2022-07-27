@@ -65,8 +65,11 @@ const Referencias: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.firstNameRe &&
-          (errors.firstNameRe.message || "Este campo es requerido")
+          errors?.references &&
+          errors?.references[index] !== undefined &&
+          errors?.references[index]?.firstname !== undefined &&
+          (errors?.references[index]?.firstname?.message ||
+            "Este campo es requerido")
         }
         label="Nombre"
         name={`references.${index}.firstname`}
@@ -86,8 +89,11 @@ const Referencias: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.lastNameRe &&
-          (errors.lastNameRe.message || "Este campo es requerido")
+          errors?.references &&
+          errors?.references[index] !== undefined &&
+          errors?.references[index]?.lasrtname !== undefined &&
+          (errors?.references[index]?.lastname?.message ||
+            "Este campo es requerido")
         }
         label="Apellido"
         name={`references.${index}.lastname`}
@@ -107,8 +113,11 @@ const Referencias: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.relation &&
-          (errors.relation.message || "Este campo es requerido")
+          errors?.references &&
+          errors?.references[index] !== undefined &&
+          errors?.references[index]?.relation !== undefined &&
+          (errors?.references[index]?.relation?.message ||
+            "Este campo es requerido")
         }
         label="Parentesco"
         name={`references.${index}.relation`}
@@ -127,7 +136,13 @@ const Referencias: React.FC<Props> = ({ data, errors, register, index }) => {
       </FormControl>
       <FormControl
         isRequired
-        error={errors.phoneRe && "Son 9 dígitos válidos"}
+        error={
+          errors?.references &&
+          errors?.references[index] !== undefined &&
+          errors?.references[index]?.phonenumber !== undefined &&
+          (errors?.references[index]?.phonenumber?.message ||
+            "Son 9 dígitos válidos")
+        }
         help="Ej: 0987654321 ó 021212345"
         label="Teléfono/Celular"
         name={`references.${index}.phonenumber`}

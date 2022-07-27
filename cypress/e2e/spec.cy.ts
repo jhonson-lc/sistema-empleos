@@ -2,7 +2,7 @@ describe('My First Test', () => {
   it('should go to register form', () => {
     cy.visit('https://sistema-empleos.vercel.app/');
 
-    cy.contains('Crear una cuenta').click()
+    cy.contains('Crear una cuenta').click({force: true});
   })
   it("incorrect email and accept politics",()=>{
     cy.visit('https://sistema-empleos.vercel.app/auth/register')

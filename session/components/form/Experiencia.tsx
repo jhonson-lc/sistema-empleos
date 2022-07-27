@@ -65,7 +65,11 @@ const Experiencia: React.FC<Props> = ({ errors, data, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.nameEx && (errors.nameEx.message || "Este campo es requerido")
+          errors?.experience &&
+          errors?.experience[index] !== undefined &&
+          errors?.experience[index]?.company !== undefined &&
+          (errors?.experience[index]?.company?.message ||
+            "Este campo es requerido")
         }
         label="Nombre de la Empresa"
         name={`experience.${index}.company`}
@@ -85,7 +89,11 @@ const Experiencia: React.FC<Props> = ({ errors, data, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.cargo && (errors.cargo.message || "Este campo es requerido")
+          errors?.experience &&
+          errors?.experience[index] !== undefined &&
+          errors?.experience[index]?.position !== undefined &&
+          (errors?.experience[index]?.position?.message ||
+            "Este campo es requerido")
         }
         label="Cargo"
         name={`experience.${index}.position`}
@@ -104,7 +112,12 @@ const Experiencia: React.FC<Props> = ({ errors, data, register, index }) => {
       </FormControl>
       <FormControl
         isRequired
-        error={errors.phoneEx && "Son 9 dígitos válidos"}
+        error={
+          errors?.experience &&
+          errors?.experience[index] !== undefined &&
+          errors?.experience[index]?.phone !== undefined &&
+          (errors?.experience[index]?.phone?.message || "Son 9 dígitos válidos")
+        }
         help="Ej: 0987654321 ó 021212345"
         label="Teléfono/Celular"
         name={`experience.${index}.phone`}
@@ -124,7 +137,13 @@ const Experiencia: React.FC<Props> = ({ errors, data, register, index }) => {
       </FormControl>
       <FormControl
         isRequired
-        error={errors.startDate && "Este campo es requerido"}
+        error={
+          errors?.experience &&
+          errors?.experience[index] !== undefined &&
+          errors?.experience[index]?.startDate !== undefined &&
+          (errors?.experience[index]?.startDate?.message ||
+            "Este campo es requerido")
+        }
         label="Fecha de Inicio"
         name={`experience.${index}.startDate`}
       >
@@ -140,7 +159,13 @@ const Experiencia: React.FC<Props> = ({ errors, data, register, index }) => {
       </FormControl>
       <FormControl
         isRequired
-        error={errors.endDate && "Este campo es requerido"}
+        error={
+          errors?.experience &&
+          errors?.experience[index] !== undefined &&
+          errors?.experience[index]?.endDate !== undefined &&
+          (errors?.experience[index]?.endDate?.message ||
+            "Este campo es requerido")
+        }
         label="Fecha de fin"
         name={`experience.${index}.endDate`}
       >

@@ -58,8 +58,10 @@ const Habilidades: React.FC<Props> = ({ data, errors, register, index }) => {
       <FormControl
         isRequired
         error={
-          errors.habilidad &&
-          (errors.habilidad.message || "Este campo es requerido")
+          errors?.skills &&
+          errors?.skills[index] !== undefined &&
+          (errors?.skills[index]?.description?.message ||
+            "Este campo es requerido")
         }
         label="Nombre de la habilidad"
         name={`skills.${index}.description`}
