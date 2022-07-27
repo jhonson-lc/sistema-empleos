@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "lib/prisma";
+import bcrypt from "bcryptjs";
 
 export default NextAuth({
   providers: [
@@ -13,12 +14,10 @@ export default NextAuth({
             email: credentials.email,
           },
         });
-        const isValid = await prisma.user.findFirst({
-          where: {
-            email: credentials.email,
-            password: credentials.password,
-          },
-        });
+        const isValid = await bcrypt.compare(
+          credentials.password,
+          user.password,
+        );
         if (!user) {
           await prisma.user.create({
             data: {

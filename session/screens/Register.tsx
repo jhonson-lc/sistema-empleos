@@ -18,6 +18,7 @@ import { signIn } from "next-auth/react";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
+import bcrypt from "bcryptjs";
 
 import FormControl from "../../ui/form/FormControl";
 
@@ -57,9 +58,10 @@ const SignUp: NextPage = () => {
       email,
     });
     if (r.data.message === "error") {
+      const passwordHash = await bcrypt.hash(password, 10);
       await signIn("credentials", {
         email,
-        password,
+        password: passwordHash,
         role,
       });
     } else if (r.data.message === "success") {
