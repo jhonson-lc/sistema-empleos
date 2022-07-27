@@ -9,15 +9,15 @@ export default NextAuth({
       id: "credentials",
       name: "credentials",
       async authorize(credentials, req) {
+        let isValid;
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },
         });
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password,
-        );
+        if (user) {
+          isValid = await bcrypt.compare(credentials.password, user.password);
+        }
         if (!user) {
           await prisma.user.create({
             data: {
