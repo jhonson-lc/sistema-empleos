@@ -46,6 +46,14 @@ const LoginScreen: React.FC = () => {
       });
     }
     if (res.status === 200) {
+      toast({
+        title: "Inicio de sesión",
+        description: "Inicio de sesión exitoso",
+        status: "success",
+        position: "top-right",
+        duration: 5000,
+        isClosable: true,
+      });
       router.reload();
     }
   }
@@ -77,7 +85,10 @@ const LoginScreen: React.FC = () => {
           de empleo.
         </Text>
         <Stack direction="column" spacing={0} w={{ base: "full", md: 400 }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            data-test-id="login-form-test"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <FormControl
               isRequired
               error={

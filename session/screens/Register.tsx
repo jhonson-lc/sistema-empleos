@@ -19,6 +19,7 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
 import bcrypt from "bcryptjs";
+import { useRouter } from "next/router";
 
 import FormControl from "../../ui/form/FormControl";
 
@@ -30,6 +31,7 @@ const SignUp: NextPage = () => {
   } = useForm();
   const [show, setShow] = React.useState(false);
   const to = useToast();
+  const router = useRouter();
 
   async function onSubmit(values: any) {
     const { email, password, rol } = values;
@@ -63,6 +65,16 @@ const SignUp: NextPage = () => {
         email,
         password: passwordHash,
         role,
+        redirect: false,
+      }).then(() => {
+        to({
+          title: "Registro exitoso",
+          description: "Ya puede iniciar sesión",
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        router.push("/auth/login");
       });
     } else if (r.data.message === "success") {
       to({
@@ -97,7 +109,10 @@ const SignUp: NextPage = () => {
           Registrarse
         </Heading>
         <Stack direction="column" spacing={0} w={{ base: "full", md: 400 }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            data-test-id="register-form-test"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <FormControl
               isRequired
               error={
